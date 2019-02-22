@@ -82,6 +82,9 @@ class VersionCommandTest extends TestCase
     /**
      * @test
      * @dataProvider versionCommands
+     *
+     * @param string $command The command being tested
+     * @param string $property The property the command exposes
      */
     public function it_gives_the_version($command, $property)
     {
