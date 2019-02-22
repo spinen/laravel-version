@@ -26,12 +26,7 @@ class VersionServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes(
-                [
-                    realpath(__DIR__ . '/config/version.php') => config_path('version.php'),
-                ],
-                'config'
-            );
+
 
             $this->commands(
                 [
@@ -54,6 +49,13 @@ class VersionServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // TODO: Register package here
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                [
+                    realpath(__DIR__ . '/config/version.php') => config_path('version.php'),
+                ],
+                'version-config'
+            );
+        }
     }
 }
