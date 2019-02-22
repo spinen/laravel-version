@@ -2,16 +2,16 @@
 
 namespace Spinen\Version\Commands\Stubs;
 
-use Spinen\Version\Commands\VersionCommand;
+use Spinen\Version\Commands\MajorVersionCommand;
 
 /**
- * Class VersionCommandStub
+ * Class MajorVersionCommandStub
  *
  * Wrapper over the class to allow setting some properties for testing.
  *
  * @package Spinen\Version\Commands\Stubs
  */
-class VersionCommandStub extends VersionCommand
+class MajorVersionCommandStub extends MajorVersionCommand
 {
     use InteractionLoopback;
 }
