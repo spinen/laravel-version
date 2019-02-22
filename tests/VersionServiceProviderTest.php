@@ -3,7 +3,6 @@
 namespace Spinen\Version;
 
 use ArrayAccess as Application;
-use Illuminate\Contracts\Events\Dispatcher as Events;
 use Illuminate\Support\ServiceProvider;
 use Mockery;
 
