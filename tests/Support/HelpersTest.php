@@ -9,6 +9,6 @@ class HelpersTest extends TestCase
      */
     public function it_has_a_helper()
     {
-        $this->assertEquals("1.2.0-branch+meta.data", (string)app_version());
+        $this->assertInstanceOf(Version::class, app_version());
     }
 }
