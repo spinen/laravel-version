@@ -12,11 +12,6 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
-/**
- * Class TestCase
- *
- * @package Tests\Spinen\BrowserFilter
- */
 abstract class TestCase extends PHPUnitTestCase
 {
     use MockeryPHPUnitIntegration;

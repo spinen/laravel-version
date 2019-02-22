@@ -77,4 +77,25 @@ class VersionCommandTests extends TestCase
     {
         $this->assertInstanceOf(VersionCommand::class, $this->command);
     }
+
+    // TODO: Right here. Set this up as a provider with the different commands
+    /**
+     * @test
+     */
+    public function it_gives_the_version()
+    {
+        $this->version_mock->version = 'a.b.c';
+
+        $this->output_mock->shouldReceive('writeln')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  '<info>a.b.c</info>',
+                                  Mockery::any(),
+                              ]
+                          )
+                          ->andReturnNull();
+
+        $this->command->handle();
+    }
 }
