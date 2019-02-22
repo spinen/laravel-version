@@ -17,7 +17,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class VersionCommandTests extends TestCase
+class VersionCommandTest extends TestCase
 {
     /**
      * @var VersionCommand
