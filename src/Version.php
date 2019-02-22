@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace Spinen\Version;
 
 /**
  * Class Version

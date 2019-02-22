@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Spinen\Version\Http\Controllers;
 
 /**
  * Class VersionController

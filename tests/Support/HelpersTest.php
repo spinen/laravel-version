@@ -1,17 +1,14 @@
 <?php
 
-namespace Tests\Unit\Support;
+namespace Spinen\Version;
 
-use Illuminate\Support\Facades\Auth;
-use Tests\MockFactory;
-use Tests\TestCase;
-
-/**
- * Class HelpersTest
- *
- * @package Tests\Unit\Support
- */
 class HelpersTest extends TestCase
 {
-    
+    /**
+     * @test
+     */
+    public function it_has_a_helper()
+    {
+        $this->assertEquals("1.2.0-branch+meta.data", (string)app_version());
+    }
 }

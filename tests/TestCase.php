@@ -7,6 +7,9 @@ use Countable;
 use Iterator;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStreamFile;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
@@ -17,6 +20,31 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 abstract class TestCase extends PHPUnitTestCase
 {
     use MockeryPHPUnitIntegration;
+
+    /**
+     * Virtual filesystem
+     *
+     * @var vfsStreamDirectory
+     */
+    protected $root;
+
+    /**
+     * Virtual file
+     *
+     * @var vfsStreamFile
+     */
+    protected $version_file;
+
+    /**
+     * Build out virtual file to use with the tests
+     */
+    public function setUp(): void
+    {
+        $this->root = vfsStream::setup();
+
+        $this->version_file = vfsStream::newFile("VERSION")
+                                       ->at($this->root);
+    }
 
     /**
      * Helper to allow mocking of iterator classes.
@@ -81,5 +109,22 @@ abstract class TestCase extends PHPUnitTestCase
             $mock->shouldReceive('count')
                  ->andReturn(count($items));
         }
+    }
+}
+
+if (!function_exists('base_path')) {
+    /**
+     * Overwrite the actual base_path to hijack in a virtual file
+     *
+     * @param $file
+     *
+     * @return string
+     */
+    function base_path($file)
+    {
+        return vfsStream::newFile($file)
+                        ->at(vfsStream::setup())
+                        ->setContent("1.2.0\n\nbranch\nmeta\ndata")
+                        ->url();
     }
 }
