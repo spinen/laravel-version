@@ -30,6 +30,8 @@ class VersionServiceProviderTest extends TestCase
     private function setUpMocks()
     {
         $this->application_mock = Mockery::mock(Application::class);
+        $this->application_mock->shouldReceive('runningInConsole')
+            ->andReturn(true);
     }
 
     /**
@@ -48,6 +50,15 @@ class VersionServiceProviderTest extends TestCase
     public function it_boots_the_service()
     {
         $this->assertNull($this->service_provider->boot());
+    }
+
+    /**
+     * @test
+     * @group unit
+     */
+    public function it_registers_the_service()
+    {
+        $this->assertNull($this->service_provider->register());
 
         // NOTE: It would be nice to verify that the config got set.
     }
