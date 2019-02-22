@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Container\Container;
 use Spinen\Version\Version;
 
 // @codeCoverageIgnoreStart
@@ -12,6 +13,7 @@ if (!function_exists('app_version')) {
      */
     function app_version()
     {
-        return app(Version::class);
+        return Container::getInstance()
+                        ->make(Version::class);
     }
 }
