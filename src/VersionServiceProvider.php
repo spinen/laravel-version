@@ -3,6 +3,13 @@
 namespace Spinen\Version;
 
 use Illuminate\Support\ServiceProvider;
+use Spinen\Version\Commands\MajorVersionCommand;
+use Spinen\Version\Commands\MetaVersionCommand;
+use Spinen\Version\Commands\MinorVersionCommand;
+use Spinen\Version\Commands\PatchVersionCommand;
+use Spinen\Version\Commands\PreReleaseVersionCommand;
+use Spinen\Version\Commands\SemVersionCommand;
+use Spinen\Version\Commands\VersionCommand;
 
 /**
  * Class VersionServiceProvider
@@ -18,12 +25,26 @@ class VersionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes(
-            [
-                realpath(__DIR__ . '/config/version.php') => config_path('version.php'),
-            ],
-            'config'
-        );
+        if ($this->app->runningInConsole()) {
+            $this->publishes(
+                [
+                    realpath(__DIR__ . '/config/version.php') => config_path('version.php'),
+                ],
+                'config'
+            );
+
+            $this->commands(
+                [
+                    MajorVersionCommand::class,
+                    MetaVersionCommand::class,
+                    MinorVersionCommand::class,
+                    PatchVersionCommand::class,
+                    PreReleaseVersionCommand::class,
+                    SemVersionCommand::class,
+                    VersionCommand::class,
+                ]
+            );
+        }
     }
 
     /**
