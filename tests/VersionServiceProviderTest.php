@@ -3,6 +3,7 @@
 namespace Spinen\Version;
 
 use ArrayAccess as Application;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Mockery;
@@ -59,6 +60,25 @@ class VersionServiceProviderTest extends TestCase
                  ]
              )
              ->andReturnNull();
+
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.route.enabled',
+                  ]
+              )
+              ->andReturnTrue();
+
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.route.middleware',
+                      'web',
+                  ]
+              )
+              ->andReturn('middleware');
 
         $this->assertNull($this->service_provider->boot());
     }
