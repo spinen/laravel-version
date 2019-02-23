@@ -5,7 +5,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/spinen/laravel-version/v/unstable)](https://packagist.org/packages/spinen/laravel-version)
 [![License](https://poser.pugx.org/spinen/laravel-version/license)](https://packagist.org/packages/spinen/laravel-version)
 
-The soft deletes are great in Laravel to make sure that some deleted data can be recovered. This package allows you to configure an array of models with how many days that you want the soft deleted data to stay in the database.
+Description here
 
 ## Build Status
 
