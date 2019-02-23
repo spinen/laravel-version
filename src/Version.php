@@ -2,6 +2,8 @@
 
 namespace Spinen\Version;
 
+use Illuminate\Support\Facades\Config;
+
 /**
  * Class Version
  *
@@ -78,8 +80,7 @@ class Version
      */
     public function __construct($file = null)
     {
-        $this->version_file = $file
-            ? : base_path('VERSION');
+        $this->version_file = $file ? : base_path(Config::get('version.file', 'VERSION'));
 
         $this->parseVersionFile();
 
@@ -152,9 +153,7 @@ class Version
         // Next line is branch/pre release
         $pre_release = array_shift($version_parts);
 
-        $this->pre_release = ($pre_release !== 'master')
-            ? $pre_release
-            : null;
+        $this->pre_release = ($pre_release !== 'master') ? $pre_release : null;
 
         // Is there anything left in the file for meta?
         if (empty($version_parts)) {

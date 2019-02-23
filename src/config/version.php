@@ -4,6 +4,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Version file
+    |--------------------------------------------------------------------------
+    |
+    | The version file to read relative to the base path.
+    */
+    'file'  => 'VERSION',
+
+    /*
+    |--------------------------------------------------------------------------
     | Route configuration
     |--------------------------------------------------------------------------
     |
@@ -23,16 +32,16 @@ return [
         //      * semver
         //      * version
 
-        'expose' => 'semver',
+        'expose'     => 'semver',
 
         // Middleware to use on the route
         'middleware' => 'web',
 
         // Name of route
-        'name' => 'version',
+        'name'       => 'version',
 
         // URI to reach the version
-        'uri' => '/version',
+        'uri'        => '/version',
 
     ],
 

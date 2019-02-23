@@ -2,6 +2,8 @@
 
 namespace Spinen\Version;
 
+use Illuminate\Support\Facades\Config;
+
 class VersionTest extends TestCase
 {
     /**
@@ -136,5 +138,23 @@ class VersionTest extends TestCase
                 'sha:value.meta.data.with_spaces', // meta
             ],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_allows_setting_the_version_file()
+    {
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.file',
+                      'VERSION'
+                  ]
+              )
+              ->andReturn('file');
+
+        new Version();
     }
 }
