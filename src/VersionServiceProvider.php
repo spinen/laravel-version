@@ -30,7 +30,7 @@ class VersionServiceProvider extends ServiceProvider
         if (Config::get('version.route.enabled')) {
             Route::group(
                 [
-                    'namespace' => 'Spinen\Version\Http\Controllers',
+                    'namespace'  => 'Spinen\Version\Http\Controllers',
                     'middleware' => Config::get('version.route.middleware', 'web'),
                 ],
                 function () {
@@ -61,6 +61,13 @@ class VersionServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton(
+            Version::class,
+            function () {
+                return new Version(base_path(Config::get('version.file', 'VERSION')));
+            }
+        );
+
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [

@@ -89,6 +89,11 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_registers_the_service()
     {
+        $this->application_mock->shouldReceive('singleton')
+                               ->once()
+                               ->withAnyArgs()
+                               ->andReturnNull();
+
         $this->assertNull($this->service_provider->register());
 
         // NOTE: It would be nice to verify that the config got set.
@@ -201,6 +206,38 @@ class VersionServiceProviderTest extends TestCase
              ->andReturnNull();
 
         $this->service_provider->boot();
+    }
+
+    /**
+     * @test
+     */
+    public function it_allows_setting_the_version_file()
+    {
+        $this->application_mock->shouldReceive('singleton')
+                               ->once()
+                               ->withArgs(
+                                   [
+                                       Version::class,
+                                       Mockery::on(function ($closure) {
+                                           Config::shouldReceive('get')
+                                                 ->once()
+                                                 ->withArgs(
+                                                     [
+                                                         'version.file',
+                                                         'VERSION',
+                                                     ]
+                                                 )
+                                                 ->andReturn('file');
+
+                                           $this->assertInstanceOf(Version::class, $closure());
+
+                                           return true;
+                                       }),
+                                   ]
+                               )
+                               ->andReturnNull();
+
+        $this->assertNull($this->service_provider->register());
     }
 }
 

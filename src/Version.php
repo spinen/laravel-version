@@ -2,8 +2,6 @@
 
 namespace Spinen\Version;
 
-use Illuminate\Support\Facades\Config;
-
 /**
  * Class Version
  *
@@ -76,11 +74,11 @@ class Version
     /**
      * Version constructor.
      *
-     * @param string|null $file
+     * @param string $file
      */
-    public function __construct($file = null)
+    public function __construct($file)
     {
-        $this->version_file = $file ? : base_path(Config::get('version.file', 'VERSION'));
+        $this->version_file = $file;
 
         $this->parseVersionFile();
 
