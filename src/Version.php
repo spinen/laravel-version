@@ -76,7 +76,7 @@ class Version
     /**
      * Version constructor.
      *
-     * @param null $file
+     * @param string|null $file
      */
     public function __construct($file = null)
     {
