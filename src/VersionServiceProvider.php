@@ -4,6 +4,7 @@ namespace Spinen\Version;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spinen\Version\Commands\MajorVersionCommand;
 use Spinen\Version\Commands\MetaVersionCommand;
@@ -34,7 +35,19 @@ class VersionServiceProvider extends ServiceProvider
                     'middleware' => Config::get('version.route.middleware', 'web'),
                 ],
                 function () {
-                    $this->loadRoutesFrom(realpath(__DIR__ . '/routes/web.php'));
+                    $this->loadRoutesFrom(realpath(__DIR__ . '/../routes/web.php'));
+                }
+            );
+        }
+
+        if (Config::get('version.view.enabled')) {
+            View::composer(
+                Config::get('version.view.views', '*'),
+                function ($view) {
+                    return $view->with(
+                        Config::get('version.view.variable', 'version'),
+                        $this->app->make(Version::class)
+                    );
                 }
             );
         }
@@ -71,7 +84,7 @@ class VersionServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                    realpath(__DIR__ . '/config/version.php') => config_path('version.php'),
+                    realpath(__DIR__ . '/../config/version.php') => config_path('version.php'),
                 ],
                 'version-config'
             );

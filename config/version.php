@@ -31,7 +31,6 @@ return [
         //      * pre_release
         //      * semver
         //      * version
-
         'expose'     => 'semver',
 
         // Middleware to use on the route
@@ -42,6 +41,27 @@ return [
 
         // URI to reach the version
         'uri'        => '/version',
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | View composer configuration
+    |--------------------------------------------------------------------------
+    |
+    | Attach an instance of the Version object to the view.
+    */
+    'view' => [
+
+        // Add the view composer?
+        'enabled' => true,
+
+        // What to variable name to expose the version instance as
+        'variable'     => 'version',
+
+        // Views to attach. "*" (default), is all views.  You can pass an
+        // array of views as well
+        'views' => '*',
 
     ],
 
