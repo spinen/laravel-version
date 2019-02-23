@@ -123,7 +123,7 @@ The following `artisan` commands are added...
 Publish the package config file to `config/version.php`:
 
 ```bash
-$ php artisan vendor:publish --tag laravel-version
+$ php artisan vendor:publish --tag version-config
 ```
 
 This file is fully documented.  You will need to make the changes to that file to suit your needs. There are 3 main configuration items...
