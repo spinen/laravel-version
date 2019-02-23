@@ -51,12 +51,19 @@ Breakdown of the line of the file
 
 | Line | Content | Source | Purpose |
 | :----: | ------ | ------ | ------ |
-| 1 | 4.3.6 | Original content in the `VERSION` file | Spilt on `.` to get `major`, `minor`, `patch` |
+| 1 | 4.3.6 | Original content in the `VERSION` file | Split on `.` to get `major`, `minor`, `patch` |
 | 2 | "\n" | (Optional) New line | Readability |
 | 3 | feature/some_great_thing | Name of branch | Becomes the `pre_release` |
 | 4 | sha:3c40a5b0d0a07973bd117a39b53367c9ff4d4cc0 | Git commit sha | Part of `meta` |
 | 5 | build:11425 | Build number | Part of `meta` |
 | 6 | 20190220170058+0000 | Datetime stamp of build | Part of `meta` |
+
+Some notes about the file...
+
+* We assume that the first line is only `major`.`minor`.`patch`
+* The first non-empty line after the version will become the `pre_release`
+* If `pre_release` is `master`, then it gets ignored
+* All of the lines after the line being used as the `pre_release` get concatenated together with a `.` to become the `meta`, so there can be as many lines as you would like 
 
 ## Using the package
 
