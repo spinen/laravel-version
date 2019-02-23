@@ -3,6 +3,7 @@
 namespace Spinen\Version;
 
 use ArrayAccess as Application;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Mockery;
 
@@ -31,7 +32,7 @@ class VersionServiceProviderTest extends TestCase
     {
         $this->application_mock = Mockery::mock(Application::class);
         $this->application_mock->shouldReceive('runningInConsole')
-            ->andReturn(true);
+                               ->andReturn(true);
     }
 
     /**
@@ -49,6 +50,16 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_boots_the_service()
     {
+        Route::shouldReceive('group')
+             ->once()
+             ->withArgs(
+                 [
+                     Mockery::any(),
+                     Mockery::any(),
+                 ]
+             )
+             ->andReturnNull();
+
         $this->assertNull($this->service_provider->boot());
     }
 

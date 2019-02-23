@@ -2,10 +2,12 @@
 
 namespace Spinen\Version\Http\Controllers;
 
+use Illuminate\Routing\Controller;
+
 /**
  * Class VersionController
  *
- * @package App\Http\Controllers
+ * @package Spinen\Version\Http\Controllers
  */
 class VersionController extends Controller
 {

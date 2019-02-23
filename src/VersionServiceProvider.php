@@ -2,6 +2,7 @@
 
 namespace Spinen\Version;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spinen\Version\Commands\MajorVersionCommand;
 use Spinen\Version\Commands\MetaVersionCommand;
@@ -25,9 +26,19 @@ class VersionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Route::group(
+            [
+                // TODO: Pull these values from config
+                //'prefix'     => 'horizon',
+                'namespace'  => 'Spinen\Version\Http\Controllers',
+                //'middleware' => config('version.route.middleware', 'web'),
+            ],
+            function () {
+                $this->loadRoutesFrom(realpath(__DIR__ . '/routes/web.php'));
+            }
+        );
+
         if ($this->app->runningInConsole()) {
-
-
             $this->commands(
                 [
                     MajorVersionCommand::class,

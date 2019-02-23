@@ -34,6 +34,7 @@
             <exclude>
                 <!--<file>src/file.php</file>-->
                 <directory suffix=".php">src/config</directory>
+                <directory suffix=".php">src/routes</directory>
             </exclude>
         </whitelist>
     </filter>
