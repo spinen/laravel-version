@@ -125,7 +125,7 @@ This file is fully documented.  You will need to make the changes to that file t
 2. `route` - Configuration of the route to display the version
 3. `view` - Configuration of the view composer to add the version to the views
 
-## Example CI
+## Example CI to modify version file
 
 We use [GitLab](https://about.gitlab.com), so here is a partial example `job` that we have in our `.gitlab-ci.yml`...
 
