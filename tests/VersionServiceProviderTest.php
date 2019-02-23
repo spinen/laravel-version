@@ -51,16 +51,6 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_boots_the_service()
     {
-        Route::shouldReceive('group')
-             ->once()
-             ->withArgs(
-                 [
-                     Mockery::any(),
-                     Mockery::any(),
-                 ]
-             )
-             ->andReturnNull();
-
         Config::shouldReceive('get')
               ->once()
               ->withArgs(
@@ -80,6 +70,16 @@ class VersionServiceProviderTest extends TestCase
               )
               ->andReturn('middleware');
 
+        Route::shouldReceive('group')
+             ->once()
+             ->withArgs(
+                 [
+                     Mockery::any(),
+                     Mockery::any(),
+                 ]
+             )
+             ->andReturnNull();
+
         $this->assertNull($this->service_provider->boot());
     }
 
@@ -92,6 +92,115 @@ class VersionServiceProviderTest extends TestCase
         $this->assertNull($this->service_provider->register());
 
         // NOTE: It would be nice to verify that the config got set.
+    }
+
+    /**
+     * @test
+     */
+    public function it_allows_disabling_the_version_route()
+    {
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.route.enabled',
+                  ]
+              )
+              ->andReturnFalse();
+
+        Config::shouldReceive('get')
+              ->never()
+              ->withAnyArgs();
+
+        Route::shouldReceive('group')
+             ->never()
+             ->withAnyArgs();
+
+        $this->service_provider->boot();
+    }
+
+    /**
+     * @test
+     */
+    public function it_allows_setting_middleware()
+    {
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.route.enabled',
+                  ]
+              )
+              ->andReturnTrue();
+
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.route.middleware',
+                      'web',
+                  ]
+              )
+              ->andReturn('middleware');
+
+        Route::shouldReceive('group')
+             ->once()
+             ->withArgs(
+                 [
+                     [
+                         'namespace'  => 'Spinen\Version\Http\Controllers',
+                         'middleware' => 'middleware',
+                     ],
+                     Mockery::any(),
+                 ]
+             )
+             ->andReturnNull();
+
+        $this->service_provider->boot();
+    }
+
+    /**
+     * @test
+     */
+    public function it_loads_expected_route_file()
+    {
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      'version.route.enabled',
+                  ]
+              )
+              ->andReturnTrue();
+
+        Config::shouldReceive('get')
+              ->once()
+              ->withArgs(
+                  [
+                      Mockery::any(),
+                      Mockery::any(),
+                  ]
+              )
+              ->andReturn('middleware');
+
+        Route::shouldReceive('group')
+             ->once()
+             ->withArgs(
+                 [
+                     Mockery::any(),
+                     Mockery::on(function ($closure) {
+                         $this->application_mock->shouldReceive('routesAreCached')
+                                                ->once()
+                                                ->withAnyArgs()
+                                                ->andReturnTrue();
+
+                         return is_null($closure());
+                     }),
+                 ]
+             )
+             ->andReturnNull();
+
+        $this->service_provider->boot();
     }
 }
 
