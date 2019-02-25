@@ -5,7 +5,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/spinen/laravel-version/v/unstable)](https://packagist.org/packages/spinen/laravel-version)
 [![License](https://poser.pugx.org/spinen/laravel-version/license)](https://packagist.org/packages/spinen/laravel-version)
 
-There are many times that it is nice to know the version of your application.  At [Spinen](https://spinen.com), we ad hear to [Semantic Versioning](https://semver.org) for our applications using [git-flow](https://github.com/nvie/gitflow).  We keep a file in the root of our projects named `VERSION` with the current version. The CI/CD process modifies the `VERSION` file to append meaningful data. Then in the views we display the version like this `<meta name="application-version" content="{{ $version }}">`. Additionally, we have a smokescreen test to hit a `/version` route to make sure that the expected version of the site is running.
+There are many times that it is nice to know the version of your application.  At [Spinen](https://spinen.com), we adhere to [Semantic Versioning](https://semver.org) for our applications using [git-flow](https://github.com/nvie/gitflow).  We keep a file in the root of our projects named `VERSION` with the current version. The CI/CD process modifies the `VERSION` file to append meaningful data. Then in the views we display the version like this `<meta name="application-version" content="{{ $version }}">`. Additionally, we have a smokescreen test to hit a `/version` route to make sure that the expected version of the site is running.
 
 ## Build Status
 
@@ -16,7 +16,7 @@ There are many times that it is nice to know the version of your application.  A
 
 ## Prerequisite
 
-As side from Laravel >= 5.5, there are no packages that are required
+As side from Laravel >= 5.5, there are no packages that are required.
 
 ## Install
 
@@ -26,7 +26,7 @@ Install Version:
 $ composer require spinen/laravel-version
 ```
 
-The package uses the auto registration feature
+The package uses the auto registration feature.
 
 ## Description of version file
 
