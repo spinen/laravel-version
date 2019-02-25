@@ -7,7 +7,7 @@ namespace Spinen\Version;
  *
  * Parse the version file into the parts
  *
- * @package App\Support
+ * @package Spinen\Version
  */
 class Version
 {
