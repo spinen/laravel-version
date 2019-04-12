@@ -17,6 +17,11 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class VersionCommandTest
+ *
+ * @package Spinen\Version\Commands
+ */
 class VersionCommandTest extends TestCase
 {
     /**

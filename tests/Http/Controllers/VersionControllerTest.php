@@ -7,6 +7,11 @@ use Mockery;
 use Spinen\Version\TestCase;
 use Spinen\Version\Version;
 
+/**
+ * Class VersionControllerTest
+ *
+ * @package Spinen\Version\Http\Controllers
+ */
 class VersionControllerTest extends TestCase
 {
     /**

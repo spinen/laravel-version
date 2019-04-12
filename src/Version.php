@@ -5,9 +5,9 @@ namespace Spinen\Version;
 /**
  * Class Version
  *
- * Parse the version file into the parts
+ * Parse the version file into its parts
  *
- * @package App\Support
+ * @package Spinen\Version
  */
 class Version
 {
@@ -112,7 +112,7 @@ class Version
     }
 
     /**
-     * If the read in line matches a version, then parse it
+     * If the read-in line matches a version, then parse it
      *
      * @param string $version
      *
@@ -133,6 +133,8 @@ class Version
 
     /**
      * Read the version file into the various parts
+     *
+     * @return void
      */
     protected function parseVersionFile()
     {

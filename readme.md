@@ -1,11 +1,11 @@
 # SPINEN's Laravel Version
 
 [![Latest Stable Version](https://poser.pugx.org/spinen/laravel-version/v/stable)](https://packagist.org/packages/spinen/laravel-version)
-[![Total Downloads](https://poser.pugx.org/spinen/laravel-version/downloads)](https://packagist.org/packages/spinen/laravel-version)
 [![Latest Unstable Version](https://poser.pugx.org/spinen/laravel-version/v/unstable)](https://packagist.org/packages/spinen/laravel-version)
+[![Total Downloads](https://poser.pugx.org/spinen/laravel-version/downloads)](https://packagist.org/packages/spinen/laravel-version)
 [![License](https://poser.pugx.org/spinen/laravel-version/license)](https://packagist.org/packages/spinen/laravel-version)
 
-There are many times that it is nice to know the version of your application.  At [Spinen](https://spinen.com), we ad hear to [Semantic Versioning](https://semver.org) for our applications using [git-flow](https://github.com/nvie/gitflow).  We keep a file in the root of our projects named `VERSION` with the current version. The CI/CD process modifies the `VERSION` file to append meaningful data. Then in the views we display the version like this `<meta name="application-version" content="{{ $version }}">`. Additionally, we have a smokescreen test to hit a `/version` route to make sure that the expected version of the site is running.
+There are many times that it is nice to know the version of your application.  At [Spinen](https://spinen.com), we adhere to [Semantic Versioning](https://semver.org) for our applications using [git-flow](https://github.com/nvie/gitflow).  We keep a file in the root of our projects named `VERSION` with the current version. The CI/CD process modifies the `VERSION` file to append meaningful data. Then in the views we display the version like this `<meta name="application-version" content="{{ $version }}">`. Additionally, we have a smokescreen test to hit a `/version` route to make sure that the expected version of the site is running.
 
 ## Build Status
 
@@ -16,7 +16,7 @@ There are many times that it is nice to know the version of your application.  A
 
 ## Prerequisite
 
-As side from Laravel >= 5.5, there are no packages that are required
+As side from Laravel >= 5.5, there are no packages that are required.
 
 ## Install
 
@@ -26,11 +26,11 @@ Install Version:
 $ composer require spinen/laravel-version
 ```
 
-The package uses the auto registration feature
+The package uses the [auto registration feature](https://laravel.com/docs/5.8/packages#package-discovery) of Laravel 5.
 
 ## Description of version file
 
-You need a file, with your Semantic Version of your application. For example...
+You need a file, with the Semantic Version of your application. For example...
 
 ```text
 4.3.6
@@ -54,7 +54,7 @@ Breakdown of the line of the file
 | 1 | 4.3.6 | Original content in the `VERSION` file | Split on `.` to get `major`, `minor`, `patch` |
 | 2 | "\n" | (Optional) New line | Readability |
 | 3 | feature/some_great_thing | Name of branch | Becomes the `pre_release` |
-| 4 | sha:3c40a5b0d0a07973bd117a39b53367c9ff4d4cc0 | Git commit sha | Part of `meta` |
+| 4 | sha:3c40a5b0d0a07973bd117a39b53367c9ff4d4cc0 | Git commit SHA | Part of `meta` |
 | 5 | build:11425 | Build number | Part of `meta` |
 | 6 | 20190220170058+0000 | Datetime stamp of build | Part of `meta` |
 
@@ -93,7 +93,7 @@ An instance of `\Spinen\Version\Version` is added to to all views as the `$versi
     * `<meta name="application-version" content="{{ $version }}">` to get `<meta name="application-version" content="4.3.6-feature/some_great_thing+sha:3c40a5b0d0a07973bd117a39b53367c9ff4d4cc0.build:11425.20190220170058+0000">`
     * NOTE: Casting object to string is the same as `$version->semver`
 * Add version to footer of page
-    * `<small class="app_version"">{{ $version->version }}</small>` to get `<small class="app_version"">4.3.6</small>`
+    * `<small class="app_version">{{ $version->version }}</small>` to get `<small class="app_version">4.3.6</small>`
    
 #### Route
 
@@ -110,7 +110,7 @@ The following `artisan` commands are added...
 
 | Command | Description |
 | ------ | ------ |
-|  version | Display version of the application. |
+|  version | Display full version of the application. |
 |  version:major | Display major version of the application. |
 |  version:meta | Display meta version of the application. |
 |  version:minor | Display minor version of the application. |
