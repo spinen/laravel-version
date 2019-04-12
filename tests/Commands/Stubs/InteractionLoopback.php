@@ -2,6 +2,11 @@
 
 namespace Spinen\Version\Commands\Stubs;
 
+/**
+ * Trait InteractionLoopback
+ *
+ * @package Spinen\Version\Commands\Stubs
+ */
 trait InteractionLoopback
 {
     /**
