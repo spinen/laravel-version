@@ -12,7 +12,7 @@ There are many times that it is nice to know the version of your application.  A
 | Branch | Status | Coverage | Code Quality |
 | ------ | :----: | :------: | :----------: |
 | Develop | [![Build Status](https://travis-ci.org/spinen/laravel-version.svg?branch=develop)](https://travis-ci.org/spinen/laravel-version) | [![Code Coverage](https://scrutinizer-ci.com/g/spinen/laravel-version/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/spinen/laravel-version/?branch=develop) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spinen/laravel-version/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/spinen/laravel-version/?branch=develop) |
-| Master | [![Build Status](https://travis-ci.org/spinen/laravel-version.svg?branch=master)](https://travis-ci.org/spinen/laravel-version) | [![Code Coverage](https://scrutinizer-ci.com/g/spinen/laravel-version/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/spinen/laravel-version/?branch=develop) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spinen/laravel-version/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spinen/laravel-version/?branch=master) |
+| Master | [![Build Status](https://travis-ci.org/spinen/laravel-version.svg?branch=master)](https://travis-ci.org/spinen/laravel-version) | [![Code Coverage](https://scrutinizer-ci.com/g/spinen/laravel-version/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/spinen/laravel-version/?branch=master) | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spinen/laravel-version/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spinen/laravel-version/?branch=master) |
 
 ## Prerequisite
 
