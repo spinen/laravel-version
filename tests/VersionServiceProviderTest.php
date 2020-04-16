@@ -209,6 +209,93 @@ class VersionServiceProviderTest extends TestCase
     /**
      * @test
      */
+    public function it_loads_expected_routes()
+    {
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnTrue();
+
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.middleware',
+                                  'web'
+                              ]
+                          )
+                          ->andReturn('middleware');
+
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.uri',
+                                  'version'
+                              ]
+                          )
+                          ->andReturn('uri');
+
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.name',
+                                  'version'
+                              ]
+                          )
+                          ->andReturn('name');
+
+        $this->router_mock->shouldReceive('group')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  Mockery::any(),
+                                  Mockery::on(function ($closure) {
+                                      return is_null($closure($this->router_mock));
+                                  }),
+                              ]
+                          )
+                          ->andReturnNull();
+
+        $this->router_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'uri',
+                                  'VersionController@version',
+                              ]
+                          )
+                          ->andReturnSelf();
+
+        $this->router_mock->shouldReceive('name')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'name',
+                              ]
+                          )
+                          ->andReturnSelf();
+
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
+
+        $this->service_provider->boot();
+    }
+
+    /**
+     * @test
+     */
     public function it_allows_disabling_the_view_composer()
     {
         $this->config_mock->shouldReceive('get')
