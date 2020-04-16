@@ -21,7 +21,7 @@ return [
     'route' => [
 
         // Expose a route?
-        'enabled' => true,
+        'enabled'    => true,
 
         // What to expose on the route. Possible values...
         //      * major
@@ -51,17 +51,17 @@ return [
     |
     | Attach an instance of the Version object to the view.
     */
-    'view' => [
+    'view'  => [
 
         // Add the view composer?
-        'enabled' => true,
+        'enabled'  => true,
 
         // What to variable name to expose the version instance as
-        'variable'     => 'version',
+        'variable' => 'version',
 
         // Views to attach. "*" (default), is all views.  You can pass an
         // array of views as well
-        'views' => '*',
+        'views'    => '*',
 
     ],
 
