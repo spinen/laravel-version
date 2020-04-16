@@ -2,7 +2,7 @@
 
 namespace Spinen\Version\Http\Controllers;
 
-use Illuminate\Support\Facades\Config;
+use Illuminate\Contracts\Config\Repository as Config;
 use Mockery;
 use Spinen\Version\TestCase;
 use Spinen\Version\Version;
@@ -14,6 +14,11 @@ use Spinen\Version\Version;
  */
 class VersionControllerTest extends TestCase
 {
+    /**
+     * @var Mockery\Mock
+     */
+    protected $config_mock;
+
     /**
      * The VersionController instance
      *
@@ -32,6 +37,8 @@ class VersionControllerTest extends TestCase
 
         $this->controller = new VersionController();
 
+        $this->config_mock = Mockery::mock(Config::class);
+
         $this->version_mock = Mockery::mock(Version::class);
     }
 
@@ -48,13 +55,13 @@ class VersionControllerTest extends TestCase
      */
     public function it_returns_version()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withAnyArgs()
-              ->andReturn('expose');
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withAnyArgs()
+                          ->andReturn('expose');
 
-        $this->version_mock->expose= 'version';
+        $this->version_mock->expose = 'version';
 
-        $this->assertEquals('version', $this->controller->version($this->version_mock));
+        $this->assertEquals('version', $this->controller->version($this->config_mock, $this->version_mock));
     }
 }

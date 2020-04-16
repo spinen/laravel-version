@@ -2,8 +2,8 @@
 
 namespace Spinen\Version\Http\Controllers;
 
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Config;
 use Spinen\Version\Version;
 
 /**
@@ -16,12 +16,13 @@ class VersionController extends Controller
     /**
      * Return the semver
      *
+     * @param Config $config
      * @param Version $version
      *
      * @return string
      */
-    public function version(Version $version)
+    public function version(Config $config, Version $version)
     {
-        return $version->{Config::get('version.route.expose', 'semver')};
+        return $version->{$config->get('version.route.expose', 'semver')};
     }
 }

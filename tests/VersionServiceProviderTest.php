@@ -3,9 +3,9 @@
 namespace Spinen\Version;
 
 use ArrayAccess as Application;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
+use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\Routing\Registrar as Router;
+use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Support\ServiceProvider;
 use Mockery;
 
@@ -17,9 +17,24 @@ class VersionServiceProviderTest extends TestCase
     protected $application_mock;
 
     /**
+     * @var Mockery\Mock
+     */
+    protected $config_mock;
+
+    /**
+     * @var Mockery\Mock
+     */
+    protected $router_mock;
+
+    /**
      * @var ServiceProvider
      */
     protected $service_provider;
+
+    /**
+     * @var Mockery\Mock
+     */
+    protected $view_mock;
 
     public function setup(): void
     {
@@ -33,8 +48,27 @@ class VersionServiceProviderTest extends TestCase
     private function setUpMocks()
     {
         $this->application_mock = Mockery::mock(Application::class);
+
+        $this->config_mock = Mockery::mock(Config::class);
+
+        $this->router_mock = Mockery::mock(Router::class);
+
+        $this->view_mock = Mockery::mock(View::class);
+
         $this->application_mock->shouldReceive('runningInConsole')
                                ->andReturn(true);
+
+        $this->application_mock->shouldReceive('offsetGet')
+                               ->with('config')
+                               ->andReturn($this->config_mock);
+
+        $this->application_mock->shouldReceive('offsetGet')
+                               ->with('router')
+                               ->andReturn($this->router_mock);
+
+        $this->application_mock->shouldReceive('offsetGet')
+                               ->with('view')
+                               ->andReturn($this->view_mock);
     }
 
     /**
@@ -52,23 +86,23 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_boots_the_service()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
         $this->assertNull($this->service_provider->boot());
     }
@@ -94,31 +128,31 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_allows_disabling_the_version_route()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
-        Config::shouldReceive('get')
-              ->never()
-              ->withAnyArgs();
+        $this->config_mock->shouldReceive('get')
+                          ->never()
+                          ->withAnyArgs();
 
-        Route::shouldReceive('group')
-             ->never()
-             ->withAnyArgs();
+        $this->router_mock->shouldReceive('group')
+                          ->never()
+                          ->withAnyArgs();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
         $this->service_provider->boot();
     }
@@ -128,99 +162,46 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_allows_setting_middleware()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnTrue();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnTrue();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.middleware',
-                      'web',
-                  ]
-              )
-              ->andReturn('middleware');
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.middleware',
+                                  'web',
+                              ]
+                          )
+                          ->andReturn('middleware');
 
-        Route::shouldReceive('group')
-             ->once()
-             ->withArgs(
-                 [
-                     [
-                         'namespace'  => 'Spinen\Version\Http\Controllers',
-                         'middleware' => 'middleware',
-                     ],
-                     Mockery::any(),
-                 ]
-             )
-             ->andReturnNull();
+        $this->router_mock->shouldReceive('group')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  [
+                                      'namespace'  => 'Spinen\Version\Http\Controllers',
+                                      'middleware' => 'middleware',
+                                  ],
+                                  Mockery::any(),
+                              ]
+                          )
+                          ->andReturnNull();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnFalse();
-
-        $this->service_provider->boot();
-    }
-
-    /**
-     * @test
-     */
-    public function it_loads_expected_route_file()
-    {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnTrue();
-
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      Mockery::any(),
-                      Mockery::any(),
-                  ]
-              )
-              ->andReturn('middleware');
-
-        Route::shouldReceive('group')
-             ->once()
-             ->withArgs(
-                 [
-                     Mockery::any(),
-                     Mockery::on(function ($closure) {
-                         $this->application_mock->shouldReceive('routesAreCached')
-                                                ->once()
-                                                ->withAnyArgs()
-                                                ->andReturnTrue();
-
-                         return is_null($closure());
-                     }),
-                 ]
-             )
-             ->andReturnNull();
-
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
         $this->service_provider->boot();
     }
@@ -230,31 +211,31 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_allows_disabling_the_view_composer()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
-        Config::shouldReceive('get')
-              ->never()
-              ->withAnyArgs();
+        $this->config_mock->shouldReceive('get')
+                          ->never()
+                          ->withAnyArgs();
 
-        View::shouldReceive('composer')
-            ->never()
-            ->withAnyArgs();
+        $this->view_mock->shouldReceive('composer')
+                        ->never()
+                        ->withAnyArgs();
 
         $this->service_provider->boot();
     }
@@ -264,42 +245,42 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_allows_setting_the_views_to_attach()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnTrue();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnTrue();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.views',
-                      '*',
-                  ]
-              )
-              ->andReturn('some.views');
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.views',
+                                  '*',
+                              ]
+                          )
+                          ->andReturn('some.views');
 
-        View::shouldReceive('composer')
-            ->once()
-            ->withArgs(
-                [
-                    'some.views',
-                    Mockery::any(),
-                ]
-            );
+        $this->view_mock->shouldReceive('composer')
+                        ->once()
+                        ->withArgs(
+                            [
+                                'some.views',
+                                Mockery::any(),
+                            ]
+                        );
 
         $this->service_provider->boot();
     }
@@ -309,74 +290,75 @@ class VersionServiceProviderTest extends TestCase
      */
     public function it_allows_setting_the_variable_to_attach_the_version_instance()
     {
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.route.enabled',
-                  ]
-              )
-              ->andReturnFalse();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.route.enabled',
+                              ]
+                          )
+                          ->andReturnFalse();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.enabled',
-                  ]
-              )
-              ->andReturnTrue();
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.enabled',
+                              ]
+                          )
+                          ->andReturnTrue();
 
-        Config::shouldReceive('get')
-              ->once()
-              ->withArgs(
-                  [
-                      'version.view.views',
-                      '*',
-                  ]
-              )
-              ->andReturn('some.views');
+        $this->config_mock->shouldReceive('get')
+                          ->once()
+                          ->withArgs(
+                              [
+                                  'version.view.views',
+                                  '*',
+                              ]
+                          )
+                          ->andReturn('some.views');
 
-        View::shouldReceive('composer')
-            ->once()
-            ->withArgs(
-                [
-                    Mockery::any(),
-                    Mockery::on(function ($closure) {
-                        Config::shouldReceive('get')
-                              ->once()
-                              ->withArgs(
-                                  [
-                                      'version.view.variable',
-                                      'version',
-                                  ]
-                              )
-                              ->andReturn('variable');
+        $this->view_mock->shouldReceive('composer')
+                        ->once()
+                        ->withArgs(
+                            [
+                                Mockery::any(),
+                                Mockery::on(function ($closure) {
+                                    $this->config_mock->shouldReceive('get')
+                                                      ->once()
+                                                      ->withArgs(
+                                                          [
+                                                              'version.view.variable',
+                                                              'version',
+                                                          ]
+                                                      )
+                                                      ->andReturn('variable');
 
-                        $this->application_mock->shouldReceive('make')
-                                               ->once()
-                                               ->withArgs(
-                                                   [
-                                                       Version::class,
-                                                   ]
-                                               )
-                                               ->andReturn('version instance');
+                                    $this->application_mock->shouldReceive('make')
+                                                           ->once()
+                                                           ->withArgs(
+                                                               [
+                                                                   Version::class,
+                                                               ]
+                                                           )
+                                                           ->andReturn('version instance');
 
-                        $view_mock = Mockery::mock();
+                                    $view_mock = Mockery::mock();
 
-                        $view_mock->shouldReceive('with')
-                                  ->once()
-                                  ->withArgs(
-                                      [
-                                          'variable',
-                                          'version instance',
-                                      ]
-                                  )->andReturnTrue();
+                                    $view_mock->shouldReceive('with')
+                                              ->once()
+                                              ->withArgs(
+                                                  [
+                                                      'variable',
+                                                      'version instance',
+                                                  ]
+                                              )
+                                              ->andReturnTrue();
 
-                        return $closure($view_mock);
-                    })
-                ]
-            );
+                                    return $closure($view_mock);
+                                }),
+                            ]
+                        );
 
         $this->service_provider->boot();
     }
@@ -392,15 +374,15 @@ class VersionServiceProviderTest extends TestCase
                                    [
                                        Version::class,
                                        Mockery::on(function ($closure) {
-                                           Config::shouldReceive('get')
-                                                 ->once()
-                                                 ->withArgs(
-                                                     [
-                                                         'version.file',
-                                                         'VERSION',
-                                                     ]
-                                                 )
-                                                 ->andReturn('file');
+                                           $this->config_mock->shouldReceive('get')
+                                                             ->once()
+                                                             ->withArgs(
+                                                                 [
+                                                                     'version.file',
+                                                                     'VERSION',
+                                                                 ]
+                                                             )
+                                                             ->andReturn('file');
 
                                            $this->assertInstanceOf(Version::class, $closure());
 
