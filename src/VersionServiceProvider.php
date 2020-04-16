@@ -2,9 +2,7 @@
 
 namespace Spinen\Version;
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
+use Illuminate\Contracts\Routing\Registrar as Router;
 use Illuminate\Support\ServiceProvider;
 use Spinen\Version\Commands\MajorVersionCommand;
 use Spinen\Version\Commands\MetaVersionCommand;
@@ -28,24 +26,25 @@ class VersionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (Config::get('version.route.enabled')) {
-            Route::group(
+        if ($this->app['config']->get('version.route.enabled')) {
+            $this->app['router']->group(
                 [
                     'namespace'  => 'Spinen\Version\Http\Controllers',
-                    'middleware' => Config::get('version.route.middleware', 'web'),
+                    'middleware' => $this->app['config']->get('version.route.middleware', 'web'),
                 ],
-                function () {
-                    $this->loadRoutesFrom(realpath(__DIR__ . '/../routes/web.php'));
+                function (Router $router) {
+                    $router->get($this->app['config']->get('version.route.uri', 'version'), 'VersionController@version')
+                           ->name($this->app['config']->get('version.route.name', 'version'));
                 }
             );
         }
 
-        if (Config::get('version.view.enabled')) {
-            View::composer(
-                Config::get('version.view.views', '*'),
+        if ($this->app['config']->get('version.view.enabled')) {
+            $this->app['view']->composer(
+                $this->app['config']->get('version.view.views', '*'),
                 function ($view) {
                     return $view->with(
-                        Config::get('version.view.variable', 'version'),
+                        $this->app['config']->get('version.view.variable', 'version'),
                         $this->app->make(Version::class)
                     );
                 }
@@ -77,7 +76,7 @@ class VersionServiceProvider extends ServiceProvider
         $this->app->singleton(
             Version::class,
             function () {
-                return new Version(base_path(Config::get('version.file', 'VERSION')));
+                return new Version(base_path($this->app['config']->get('version.file', 'VERSION')));
             }
         );
 
