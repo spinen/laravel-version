@@ -23,6 +23,6 @@ class VersionController extends Controller
      */
     public function version(Config $config, Version $version)
     {
-        return $version->{$config->get('version.route.expose', 'semver')};
+        return $version->{$config->get('version.route.expose', 'semver')} . " Hostname: " . gethostname();
     }
 }
