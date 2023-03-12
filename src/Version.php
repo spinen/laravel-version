@@ -6,77 +6,57 @@ namespace Spinen\Version;
  * Class Version
  *
  * Parse the version file into its parts
- *
- * @package Spinen\Version
  */
 class Version
 {
     /**
      * Major version
-     *
-     * @var integer|null
      */
-    public $major = null;
+    public ?int $major = null;
 
     /**
      * Meta
      *
      * Extra data about the version with dots separating key data and underscores for spaces
-     *
-     * @var string|null
      */
-    public $meta = null;
+    public ?string $meta = null;
 
     /**
      * Minor version
-     *
-     * @var integer|null
      */
-    public $minor = null;
+    public ?int $minor = null;
 
     /**
      * Patch version
-     *
-     * @var integer|null
      */
-    public $patch = null;
+    public ?int $patch = null;
 
     /**
      * Pre release
      *
      * This will most likely be the branch version, unless we are on the master branch
-     *
-     * @var string|null
      */
-    public $pre_release = null;
+    public ?string $pre_release = null;
 
     /**
      * Version in SemVer format
-     *
-     * @var string
      */
-    public $semver;
+    public string $semver;
 
     /**
      * The version of the application
-     *
-     * @var string
      */
-    public $version = "UNDEFINED";
+    public string $version = 'UNDEFINED';
 
     /**
      * The file that holds the version info
-     *
-     * @var string
      */
-    protected $version_file;
+    protected string $version_file;
 
     /**
      * Version constructor.
-     *
-     * @param string $file
      */
-    public function __construct($file)
+    public function __construct(string $file)
     {
         $this->version_file = $file;
 
@@ -103,42 +83,36 @@ class Version
         $this->semver = $this->version;
 
         if ($this->pre_release) {
-            $this->semver .= '-' . $this->pre_release;
+            $this->semver .= '-'.$this->pre_release;
         }
 
         if ($this->meta) {
-            $this->semver .= '+' . $this->meta;
+            $this->semver .= '+'.$this->meta;
         }
     }
 
     /**
      * If the read-in line matches a version, then parse it
-     *
-     * @param string $version
-     *
-     * @return bool
      */
-    protected function parseVersion($version)
+    protected function parseVersion(string $version): bool
     {
-        if (!preg_match('/\\d+\\.\\d+\\.\\d+/u', $version)) {
+        if (! preg_match('/\\d+\\.\\d+\\.\\d+/u', $version)) {
             return false;
         }
 
         $this->version = $version;
 
-        list($this->major, $this->minor, $this->patch) = array_map('intval', explode(".", $this->version));
+        [$this->major, $this->minor, $this->patch] = array_map('intval', explode('.', $this->version));
 
         return true;
     }
 
     /**
      * Read the version file into the various parts
-     *
-     * @return void
      */
-    protected function parseVersionFile()
+    protected function parseVersionFile(): void
     {
-        if (!file_exists($this->version_file)) {
+        if (! file_exists($this->version_file)) {
             return;
         }
 
@@ -146,7 +120,7 @@ class Version
         $version_parts = array_filter(explode("\n", @file_get_contents($this->version_file)));
 
         // First line is the version
-        if (empty($version_parts) or !$this->parseVersion(array_shift($version_parts))) {
+        if (empty($version_parts) or ! $this->parseVersion(array_shift($version_parts))) {
             return;
         }
 
@@ -161,6 +135,6 @@ class Version
         }
 
         // Everything left is the meta, so concatenate it with .'s & replace the spaces with _'s
-        $this->meta = preg_replace("/\\s+/u", "_", implode('.', $version_parts));
+        $this->meta = preg_replace('/\\s+/u', '_', implode('.', $version_parts));
     }
 }

@@ -8,21 +8,14 @@ use Spinen\Version\Version;
 
 /**
  * Class VersionController
- *
- * @package Spinen\Version\Http\Controllers
  */
 class VersionController extends Controller
 {
     /**
      * Return the semver
-     *
-     * @param Config $config
-     * @param Version $version
-     *
-     * @return string
      */
-    public function version(Config $config, Version $version)
+    public function version(Config $config, Version $version): string
     {
-        return $version->{$config->get('version.route.expose', 'semver')} . " Hostname: " . gethostname();
+        return $version->{$config->get('version.route.expose', 'semver')}.' Hostname: '.gethostname();
     }
 }

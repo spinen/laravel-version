@@ -3,6 +3,7 @@
 namespace Spinen\Version\Commands;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Str;
 use Mockery;
 use Spinen\Version\Commands\Stubs\MajorVersionCommandStub as MajorVersionCommand;
 use Spinen\Version\Commands\Stubs\MetaVersionCommandStub as MetaVersionCommand;
@@ -19,8 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class VersionCommandTest
- *
- * @package Spinen\Version\Commands
  */
 class VersionCommandTest extends TestCase
 {
@@ -86,22 +85,20 @@ class VersionCommandTest extends TestCase
 
     /**
      * @test
-     * @dataProvider versionCommands
      *
-     * @param string $command The command being tested
-     * @param string $property The property the command exposes
+     * @dataProvider versionCommands
      */
-    public function it_gives_the_version($command, $property)
+    public function it_gives_the_version(string $command, string $property, string|int $value)
     {
         $this->setUpCommand($command);
 
-        $this->version_mock->{$property} = 'some value';
+        $this->version_mock->{$property} = $value;
 
         $this->output_mock->shouldReceive('writeln')
                           ->once()
                           ->withArgs(
                               [
-                                  '<info>some value</info>',
+                                  "<info>{$value}</info>",
                                   Mockery::any(),
                               ]
                           )
@@ -110,36 +107,43 @@ class VersionCommandTest extends TestCase
         $this->command->handle();
     }
 
-    public function versionCommands()
+    public static function versionCommands()
     {
         return [
-            'Major Version'      => [
+            'Major Version' => [
                 MajorVersionCommand::class,
                 'major',
+                random_int(1, 999),
             ],
-            'Meta Version'       => [
+            'Meta Version' => [
                 MetaVersionCommand::class,
                 'meta',
+                Str::random(),
             ],
-            'Minor Version'      => [
+            'Minor Version' => [
                 MinorVersionCommand::class,
                 'minor',
+                random_int(1, 999),
             ],
-            'Patch Version'      => [
+            'Patch Version' => [
                 PatchVersionCommand::class,
                 'patch',
+                random_int(1, 999),
             ],
             'Pre Release Version' => [
                 PreReleaseVersionCommand::class,
                 'pre_release',
+                Str::random(),
             ],
-            'Sem Version'        => [
+            'Sem Version' => [
                 SemVersionCommand::class,
                 'semver',
+                Str::random(),
             ],
-            'Version'           => [
+            'Version' => [
                 VersionCommand::class,
                 'version',
+                Str::random(),
             ],
         ];
     }

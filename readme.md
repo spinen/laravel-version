@@ -16,7 +16,7 @@ There are many times that it is nice to know the version of your application.  A
 
 ## Prerequisite
 
-As side from Laravel >= 5.5, there are no packages that are required.
+As side from Laravel >= 8, there are no packages that are required.
 
 ## Install
 
@@ -63,7 +63,7 @@ Some notes about the file...
 * We assume that the first line is only `major`.`minor`.`patch`
 * The first non-empty line after the version will become the `pre_release`
 * If `pre_release` is `master`, then it gets ignored
-* All of the lines after the line being used as the `pre_release` get concatenated together with a `.` to become the `meta`, so there can be as many lines as you would like 
+* All of the lines after the line being used as the `pre_release` get concatenated together with a `.` to become the `meta`, so there can be as many lines as you would like
 
 ## Using the package
 
@@ -94,7 +94,7 @@ An instance of `\Spinen\Version\Version` is added to to all views as the `$versi
     * NOTE: Casting object to string is the same as `$version->semver`
 * Add version to footer of page
     * `<small class="app_version">{{ $version->version }}</small>` to get `<small class="app_version">4.3.6</small>`
-   
+
 #### Route
 
 Visiting `/version` will return the version...

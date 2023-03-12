@@ -14,8 +14,6 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
  * Class TestCase
- *
- * @package Spinen\Version
  */
 abstract class TestCase extends PHPUnitTestCase
 {
@@ -42,7 +40,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $this->root = vfsStream::setup();
 
-        $this->version_file = vfsStream::newFile("VERSION")
+        $this->version_file = vfsStream::newFile('VERSION')
                                        ->at($this->root);
     }
 
@@ -50,9 +48,6 @@ abstract class TestCase extends PHPUnitTestCase
      * Helper to allow mocking of iterator classes.
      *
      * @link https://gist.github.com/VladaHejda/8299871
-     *
-     * @param MockInterface $mock
-     * @param array $items
      *
      * @return void
      */
@@ -77,7 +72,7 @@ abstract class TestCase extends PHPUnitTestCase
             $counter = 0;
 
             $mock->shouldReceive('rewind')
-                 ->andReturnUsing(function () use (& $counter) {
+                 ->andReturnUsing(function () use (&$counter) {
                      $counter = 0;
                  });
 
@@ -85,23 +80,23 @@ abstract class TestCase extends PHPUnitTestCase
             $keys = array_values(array_keys($items));
 
             $mock->shouldReceive('valid')
-                 ->andReturnUsing(function () use (& $counter, $vals) {
+                 ->andReturnUsing(function () use (&$counter, $vals) {
                      return isset($vals[$counter]);
                  });
 
             $mock->shouldReceive('current')
-                 ->andReturnUsing(function () use (& $counter, $vals) {
+                 ->andReturnUsing(function () use (&$counter, $vals) {
                      return $vals[$counter];
                  });
 
             $mock->shouldReceive('key')
-                 ->andReturnUsing(function () use (& $counter, $keys) {
+                 ->andReturnUsing(function () use (&$counter, $keys) {
                      return $keys[$counter];
                  });
 
             $mock->shouldReceive('next')
-                 ->andReturnUsing(function () use (& $counter) {
-                     ++$counter;
+                 ->andReturnUsing(function () use (&$counter) {
+                     $counter++;
                  });
         }
 
@@ -112,11 +107,10 @@ abstract class TestCase extends PHPUnitTestCase
     }
 }
 
-if (!function_exists('base_path')) {
+if (! function_exists('base_path')) {
     /**
      * Overwrite the actual base_path to hijack in a virtual file
      *
-     * @param $file
      *
      * @return string
      */

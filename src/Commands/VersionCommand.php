@@ -7,8 +7,6 @@ use Spinen\Version\Version;
 
 /**
  * Class VersionCommand
- *
- * @package Spinen\Version\Commands
  */
 class VersionCommand extends Command
 {
@@ -28,15 +26,11 @@ class VersionCommand extends Command
 
     /**
      * The Version instance
-     *
-     * @var Version
      */
-    protected $version;
+    protected Version $version;
 
     /**
      * Create a new command instance.
-     *
-     * @param Version $version
      */
     public function __construct(Version $version)
     {
@@ -47,10 +41,8 @@ class VersionCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info($this->version->version);
     }

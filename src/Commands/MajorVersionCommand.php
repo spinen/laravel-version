@@ -4,8 +4,6 @@ namespace Spinen\Version\Commands;
 
 /**
  * Class MajorVersionCommand
- *
- * @package Spinen\Version\Commands
  */
 class MajorVersionCommand extends VersionCommand
 {
@@ -25,10 +23,8 @@ class MajorVersionCommand extends VersionCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info($this->version->major);
     }
