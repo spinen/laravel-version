@@ -23,6 +23,7 @@
         "illuminate/view": "~8|~9|~10"
     },
     "require-dev": {
+        "laravel/pint": "^1.6",
         "mikey179/vfsstream": "^1.6.11",
         "mockery/mockery": "^1.5.1",
         "phpunit/phpunit": "^9.6.5",
