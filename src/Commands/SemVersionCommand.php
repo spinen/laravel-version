@@ -4,8 +4,6 @@ namespace Spinen\Version\Commands;
 
 /**
  * Class SemVersionCommand
- *
- * @package Spinen\Version\Commands
  */
 class SemVersionCommand extends VersionCommand
 {
@@ -25,10 +23,8 @@ class SemVersionCommand extends VersionCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info($this->version->semver);
     }

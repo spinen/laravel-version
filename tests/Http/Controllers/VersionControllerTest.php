@@ -9,8 +9,6 @@ use Spinen\Version\Version;
 
 /**
  * Class VersionControllerTest
- *
- * @package Spinen\Version\Http\Controllers
  */
 class VersionControllerTest extends TestCase
 {
@@ -62,6 +60,6 @@ class VersionControllerTest extends TestCase
 
         $this->version_mock->expose = 'version';
 
-        $this->assertEquals('version Hostname: ' . gethostname(), $this->controller->version($this->config_mock, $this->version_mock));
+        $this->assertEquals('version Hostname: '.gethostname(), $this->controller->version($this->config_mock, $this->version_mock));
     }
 }

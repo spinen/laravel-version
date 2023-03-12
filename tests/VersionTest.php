@@ -6,17 +6,18 @@ class VersionTest extends TestCase
 {
     /**
      * @test
+     *
      * @dataProvider versionFiles
      *
-     * @param string $contents Contents of the VERSION file, if null, delete the file
-     * @param string $string Expected string version of the parsed version
-     * @param string $version Expected <Major>.<Minor>.<Patch> of the parsed version
-     * @param string $semver Expected semver of the parsed version
-     * @param integer|null $major Expected major of the parsed version
-     * @param integer|null $minor Expected minor of the parsed version
-     * @param integer|null $patch Expected patch of the parsed version
-     * @param string|null $pre_release Expected pre release of the parsed version
-     * @param string|null $meta Expected meta of the parsed version
+     * @param  string  $contents Contents of the VERSION file, if null, delete the file
+     * @param  string  $string Expected string version of the parsed version
+     * @param  string  $version Expected <Major>.<Minor>.<Patch> of the parsed version
+     * @param  string  $semver Expected semver of the parsed version
+     * @param  int|null  $major Expected major of the parsed version
+     * @param  int|null  $minor Expected minor of the parsed version
+     * @param  int|null  $patch Expected patch of the parsed version
+     * @param  string|null  $pre_release Expected pre release of the parsed version
+     * @param  string|null  $meta Expected meta of the parsed version
      */
     public function it_parses_version_files_as_expected(
         $contents,
@@ -30,11 +31,11 @@ class VersionTest extends TestCase
         $meta
     ) {
         // If no content for the file, then delete it, otherwise, set the content
-        is_null($contents) ? $this->root->removeChild("VERSION") : $this->version_file->setContent($contents);
+        is_null($contents) ? $this->root->removeChild('VERSION') : $this->version_file->setContent($contents);
 
         $parser = new Version($this->version_file->url());
 
-        $this->assertEquals($string, (string)$parser);
+        $this->assertEquals($string, (string) $parser);
         $this->assertEquals($version, $parser->version);
         $this->assertEquals($semver, $parser->semver);
         $this->assertEquals($major, $parser->major);
@@ -44,10 +45,10 @@ class VersionTest extends TestCase
         $this->assertEquals($meta, $parser->meta);
     }
 
-    public function versionFiles()
+    public static function versionFiles()
     {
         return [
-            'simple version file'                => [
+            'simple version file' => [
                 '1.2.0', // contents
                 '1.2.0', // string
                 '1.2.0', // version
@@ -58,7 +59,7 @@ class VersionTest extends TestCase
                 null, // pre_release
                 null, // meta
             ],
-            'empty version file'                 => [
+            'empty version file' => [
                 '', // contents
                 'UNDEFINED', // string
                 'UNDEFINED', // version
@@ -69,7 +70,7 @@ class VersionTest extends TestCase
                 null, // pre_release
                 null, // meta
             ],
-            'invalid version file'               => [
+            'invalid version file' => [
                 'a.b.c', // contents
                 'UNDEFINED', // string
                 'UNDEFINED', // version
@@ -80,7 +81,7 @@ class VersionTest extends TestCase
                 null, // pre_release
                 null, // meta
             ],
-            'missing version file'               => [
+            'missing version file' => [
                 null, // contents
                 'UNDEFINED', // string
                 'UNDEFINED', // version
@@ -91,7 +92,7 @@ class VersionTest extends TestCase
                 null, // pre_release
                 null, // meta
             ],
-            'complex version file'               => [
+            'complex version file' => [
                 "1.2.0\n\nbranch\nsha:value\nmeta\ndata\nwith spaces", // contents
                 '1.2.0-branch+sha:value.meta.data.with_spaces', // string
                 '1.2.0', // version
@@ -102,7 +103,7 @@ class VersionTest extends TestCase
                 'branch', // pre_release
                 'sha:value.meta.data.with_spaces', // meta
             ],
-            'no meta version file'               => [
+            'no meta version file' => [
                 "1.2.0\n\nbranch", // contents
                 '1.2.0-branch', // string
                 '1.2.0', // version
@@ -113,7 +114,7 @@ class VersionTest extends TestCase
                 'branch', // pre_release
                 null, // meta
             ],
-            'master branch version file'         => [
+            'master branch version file' => [
                 "1.2.0\n\nmaster", // contents
                 '1.2.0', // string
                 '1.2.0', // version

@@ -4,8 +4,6 @@ namespace Spinen\Version\Commands;
 
 /**
  * Class PreReleaseVersionCommand
- *
- * @package Spinen\Version\Commands
  */
 class PreReleaseVersionCommand extends VersionCommand
 {
@@ -25,10 +23,8 @@ class PreReleaseVersionCommand extends VersionCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info($this->version->pre_release);
     }

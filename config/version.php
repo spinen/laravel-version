@@ -9,7 +9,7 @@ return [
     |
     | The version file to read relative to the base path.
     */
-    'file'  => 'VERSION',
+    'file' => 'VERSION',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
     'route' => [
 
         // Expose a route?
-        'enabled'    => true,
+        'enabled' => true,
 
         // What to expose on the route. Possible values...
         //      * major
@@ -31,16 +31,16 @@ return [
         //      * pre_release
         //      * semver
         //      * version
-        'expose'     => 'semver',
+        'expose' => 'semver',
 
         // Middleware to use on the route
         'middleware' => 'web',
 
         // Name of route
-        'name'       => 'version',
+        'name' => 'version',
 
         // URI to reach the version
-        'uri'        => '/version',
+        'uri' => '/version',
 
     ],
 
@@ -51,17 +51,17 @@ return [
     |
     | Attach an instance of the Version object to the view.
     */
-    'view'  => [
+    'view' => [
 
         // Add the view composer?
-        'enabled'  => true,
+        'enabled' => true,
 
         // What to variable name to expose the version instance as
         'variable' => 'version',
 
         // Views to attach. "*" (default), is all views.  You can pass an
         // array of views as well
-        'views'    => '*',
+        'views' => '*',
 
     ],
 
