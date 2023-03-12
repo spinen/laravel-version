@@ -4,25 +4,16 @@ namespace Spinen\Version\Commands\Stubs;
 
 /**
  * Trait InteractionLoopback
- *
- * @package Spinen\Version\Commands\Stubs
  */
 trait InteractionLoopback
 {
-    /**
-     * @var mixed
-     */
     protected $input;
 
-    /**
-     * @var mixed
-     */
     protected $output;
 
     /**
      * Set the input.
      *
-     * @param $input
      *
      * @return $this
      */
@@ -36,7 +27,6 @@ trait InteractionLoopback
     /**
      * Set the output.
      *
-     * @param $output
      *
      * @return $this
      */

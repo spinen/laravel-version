@@ -73,6 +73,7 @@ class VersionServiceProviderTest extends TestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function it_can_be_constructed()
@@ -82,6 +83,7 @@ class VersionServiceProviderTest extends TestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function it_boots_the_service()
@@ -109,6 +111,7 @@ class VersionServiceProviderTest extends TestCase
 
     /**
      * @test
+     *
      * @group unit
      */
     public function it_registers_the_service()
@@ -186,7 +189,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   [
-                                      'namespace'  => 'Spinen\Version\Http\Controllers',
+                                      'namespace' => 'Spinen\Version\Http\Controllers',
                                       'middleware' => 'middleware',
                                   ],
                                   Mockery::any(),
@@ -225,7 +228,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.middleware',
-                                  'web'
+                                  'web',
                               ]
                           )
                           ->andReturn('middleware');
@@ -235,7 +238,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.uri',
-                                  'version'
+                                  'version',
                               ]
                           )
                           ->andReturn('uri');
@@ -245,7 +248,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.name',
-                                  'version'
+                                  'version',
                               ]
                           )
                           ->andReturn('name');
@@ -485,5 +488,5 @@ class VersionServiceProviderTest extends TestCase
 
 function config_path($file)
 {
-    return 'path/to/config/' . $file;
+    return 'path/to/config/'.$file;
 }

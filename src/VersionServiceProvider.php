@@ -14,8 +14,6 @@ use Spinen\Version\Commands\VersionCommand;
 
 /**
  * Class VersionServiceProvider
- *
- * @package Spinen\Version
  */
 class VersionServiceProvider extends ServiceProvider
 {
@@ -29,7 +27,7 @@ class VersionServiceProvider extends ServiceProvider
         if ($this->app['config']->get('version.route.enabled')) {
             $this->app['router']->group(
                 [
-                    'namespace'  => 'Spinen\Version\Http\Controllers',
+                    'namespace' => 'Spinen\Version\Http\Controllers',
                     'middleware' => $this->app['config']->get('version.route.middleware', 'web'),
                 ],
                 function (Router $router) {
@@ -83,7 +81,7 @@ class VersionServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes(
                 [
-                    realpath(__DIR__ . '/../config/version.php') => config_path('version.php'),
+                    realpath(__DIR__.'/../config/version.php') => config_path('version.php'),
                 ],
                 'version-config'
             );
