@@ -24,7 +24,7 @@ class VersionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app['config']->get('version.route.enabled')) {
+        if ($this->app['config']->get('version.route.enabled', true)) {
             $this->app['router']->group(
                 [
                     'namespace' => 'Spinen\Version\Http\Controllers',
@@ -37,7 +37,7 @@ class VersionServiceProvider extends ServiceProvider
             );
         }
 
-        if ($this->app['config']->get('version.view.enabled')) {
+        if ($this->app['config']->get('version.view.enabled', true)) {
             $this->app['view']->composer(
                 $this->app['config']->get('version.view.views', '*'),
                 function ($view) {
