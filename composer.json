@@ -28,6 +28,7 @@
         "mockery/mockery": "^1.5.1",
         "phpunit/phpunit": "^9.6.8",
         "psy/psysh": "^0.11",
+        "scrutinizer/ocular": "^1.9",
         "symfony/var-dumper": "^6.2"
     },
     "autoload": {
