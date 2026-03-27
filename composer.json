@@ -26,8 +26,8 @@
         "laravel/pint": "^1.6",
         "mikey179/vfsstream": "^1.6.11",
         "mockery/mockery": "^1.5.1",
-        "phpunit/phpunit": "^9.6.5",
-        "psy/psysh": "^0.11.1",
+        "phpunit/phpunit": "^9.6.8",
+        "psy/psysh": "^0.11",
         "symfony/var-dumper": "^6.2"
     },
     "autoload": {
