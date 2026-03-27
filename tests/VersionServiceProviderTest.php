@@ -27,7 +27,7 @@ class VersionServiceProviderTest extends TestCase
     protected $router_mock;
 
     /**
-     * @var ServiceProvider
+     * @var VersionServiceProvider
      */
     protected $service_provider;
 
@@ -93,6 +93,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -102,6 +103,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -136,6 +138,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -153,6 +156,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -170,6 +174,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnTrue();
@@ -202,6 +207,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -219,6 +225,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnTrue();
@@ -289,6 +296,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -306,6 +314,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -315,6 +324,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -340,6 +350,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -349,6 +360,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnTrue();
@@ -385,6 +397,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.route.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnFalse();
@@ -394,6 +407,7 @@ class VersionServiceProviderTest extends TestCase
                           ->withArgs(
                               [
                                   'version.view.enabled',
+                                  true,
                               ]
                           )
                           ->andReturnTrue();
